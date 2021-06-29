@@ -45,7 +45,7 @@ def create_border(img, width, arg):
 
     i = 0
     j = 0
-    col = colorgen(arg.split(','))
+    col = colorgen(arg)
     while i<10:
         j = 0
         while j<10:
