@@ -13,7 +13,7 @@ app = Flask(__name__)
 #декоратор для вывода страницы по умолчанию
 @app.route("/")
 def hello():
- return '<html><head></head> <body> Hello World! <br> We have <br> <a href="/net">Individual Quest</a> </body></html>'
+ return '<html><head></head> <body> Hello, my Comrade! <br> We have a dog and my <br> <a href="/net">Individual Quest</a> </body></html>'
 if __name__ == "__main__":
  app.run(host='127.0.0.1',port=5000)
 from flask import render_template
@@ -44,6 +44,9 @@ class NetForm(FlaskForm):
  # или неверны
  
  number = DecimalField('Размер вашей рамки', validators=[InputRequired(), NumberRange(min=0, max=3000, message='Разместите числа от 0 до 3000')])
+ #number2 = DecimalField('Количество цветов', validators=[InputRequired(), NumberRange(min=1, max=3, message='Разместите числа от 1 до 3')])
+ number3 = StringField('Последовательность цветов через запятую (б,ч,к,ж,з,с,г,о,ф)', validators=[InputRequired()])
+ 
  # поле загрузки файла
  # здесь валидатор укажет ввести правильные файлы
  upload = FileField('Load image', validators=[ FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
@@ -74,7 +77,7 @@ def iz():
   form.upload.data.save(filename)
   fimage = Image.open(filename)
   # передать загруженный файл
-  filenames = makegraphs(fimage,form.number.data)
+  filenames = makegraphs(fimage,form.number.data, form.number3.data)
  # передаем форму в шаблон
  # если был нажат сабмит, либо передадим falsy значения
  return render_template('iz.html',form=form,image_res=filenames)
